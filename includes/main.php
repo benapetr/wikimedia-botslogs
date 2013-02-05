@@ -170,9 +170,7 @@ class Core {
 	}
 
 	private static function sanitize_text( $string ) {
-		$string = str_replace(">", "&gt;", $string);
-		$string = str_replace("<", "&lt;", $string);
-	       	return $string;	
+	       	return htmlentities($string);	
 	}
 
 	private static function getResult( $query, $channel, $time ) {
@@ -219,7 +217,7 @@ class Core {
 					}else {
 					$string = $_POST['query'];
 					}
-					Html::$_page = "<form action=\"index.php?action=search&channel=". str_replace("#", "%23", $chan) ."\" method=\"post\"><table border=\"1\"><tr><td>Query: </td><td width=100%><input name=\"query\" value=\"". $string ."\" style=\"width:600px;\" type=text></td></tr><tr><td>Channel:</td><td>". $chan ."</td></tr></table><input type=submit value=\"Search\"></form>";
+					Html::$_page = "<form action=\"index.php?action=search&channel=". urlencode($chan) ."\" method=\"post\"><table border=\"1\"><tr><td>Query: </td><td width=100%><input name=\"query\" value=\"". $string ."\" style=\"width:600px;\" type=text></td></tr><tr><td>Channel:</td><td>". htmlentities($chan) ."</td></tr></table><input type=submit value=\"Search\"></form>";
 				if (isset($_POST['query'])) {
 					$item = self::getResult( $_POST['query'], $chan, "" );
 					if (self::$no == 0) {
